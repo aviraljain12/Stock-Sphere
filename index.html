@@ -18,8 +18,10 @@
                 <ul>
                     <li class="active"><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
                     <li><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
-                    <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
-                    <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
+                    <li><a href="#"><i class="fas fa-truck-field"></i> Suppliers</a></li>
+                    <li><a href="#"><i class="fas fa-file-invoice"></i> Reports</a></li>
+                    <hr style="opacity: 0.2; margin: 10px 0;">
+                    <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </nav>
         </aside>
@@ -28,57 +30,52 @@
             <header>
                 <h1>Dashboard Overview</h1>
                 <div class="user-profile">
-                    <span>Aviral Jain</span>
+                    <span>Admin</span>
                     <i class="fas fa-user-circle"></i>
                 </div>
             </header>
 
-            <section class="stats-grid" id="dashboard-stats">
+            <section class="stats-grid">
                 <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-boxes"></i></div>
                     <div class="stat-info">
                         <h3>Total Items</h3>
                         <p id="total-items">0</p>
                     </div>
-                    <i class="fas fa-list"></i>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <h3>Total Stock</h3>
-                        <p id="total-stock">0</p>
-                    </div>
-                    <i class="fas fa-cubes"></i>
                 </div>
                 <div class="stat-card warning">
+                    <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
                     <div class="stat-info">
                         <h3>Low Stock</h3>
-                        <p id="low-stock">0</p>
+                        <p id="low-stock-count">0</p>
                     </div>
-                    <i class="fas fa-exclamation-triangle"></i>
                 </div>
-                <div class="stat-card success">
+                <div class="stat-card info">
+                    <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
                     <div class="stat-info">
                         <h3>Inventory Value</h3>
-                        <p id="valuation">₹0</p>
+                        <p id="total-value">$0</p>
                     </div>
-                    <i class="fas fa-indian-rupee-sign"></i>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-icon"><i class="fas fa-truck"></i></div>
+                    <div class="stat-info">
+                        <h3>Active Suppliers</h3>
+                        <p id="active-suppliers">0</p>
+                    </div>
                 </div>
             </section>
 
-            <section class="charts-section">
-                <div class="chart-container">
-                    <h3>Stock Distribution</h3>
-                    <div class="mock-chart">
-                         <div style="height: 200px; background: #f4f4f4; border-radius: 8px; display: flex; align-items: flex-end; justify-content: space-around; padding: 10px;">
-                            <div style="width: 40px; height: 80%; background: #4e73df;"></div>
-                            <div style="width: 40px; height: 40%; background: #1cc88a;"></div>
-                            <div style="width: 40px; height: 60%; background: #36b9cc;"></div>
-                            <div style="width: 40px; height: 30%; background: #f6c23e;"></div>
-                         </div>
-                    </div>
+            <section class="recent-activity">
+                <h2>Quick Actions</h2>
+                <div class="action-buttons" style="display: flex; gap: 1rem; margin-top: 1rem;">
+                    <a href="inventory.html" class="btn-primary" style="padding: 10px 20px; text-decoration: none; border-radius: 8px;">Manage Inventory</a>
+                    <button class="btn-secondary" style="padding: 10px 20px; border: none; border-radius: 8px;">Generate Report</button>
                 </div>
             </section>
         </main>
     </div>
+
     <script src="app.js"></script>
 </body>
 </html>
