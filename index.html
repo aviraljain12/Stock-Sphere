@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock-Sphere | Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-boxes-stacked"></i>
+                <span>Stock-Sphere</span>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
+                    <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header>
+                <h1>Dashboard Overview</h1>
+                <div class="user-profile">
+                    <span>Aviral Jain</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </header>
+
+            <section class="stats-grid" id="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Total Items</h3>
+                        <p id="total-items">0</p>
+                    </div>
+                    <i class="fas fa-list"></i>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>Total Stock</h3>
+                        <p id="total-stock">0</p>
+                    </div>
+                    <i class="fas fa-cubes"></i>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-info">
+                        <h3>Low Stock</h3>
+                        <p id="low-stock">0</p>
+                    </div>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-info">
+                        <h3>Inventory Value</h3>
+                        <p id="valuation">₹0</p>
+                    </div>
+                    <i class="fas fa-indian-rupee-sign"></i>
+                </div>
+            </section>
+
+            <section class="charts-section">
+                <div class="chart-container">
+                    <h3>Stock Distribution</h3>
+                    <div class="mock-chart">
+                         <div style="height: 200px; background: #f4f4f4; border-radius: 8px; display: flex; align-items: flex-end; justify-content: space-around; padding: 10px;">
+                            <div style="width: 40px; height: 80%; background: #4e73df;"></div>
+                            <div style="width: 40px; height: 40%; background: #1cc88a;"></div>
+                            <div style="width: 40px; height: 60%; background: #36b9cc;"></div>
+                            <div style="width: 40px; height: 30%; background: #f6c23e;"></div>
+                         </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
