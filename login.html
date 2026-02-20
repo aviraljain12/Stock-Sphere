@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock-Sphere | Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo" style="justify-content: center; border: none; padding: 0; margin-bottom: 20px; color: var(--primary);">
+                <i class="fas fa-boxes-stacked"></i>
+                <span style="color: var(--text-main);">Stock-Sphere</span>
+            </div>
+            <h2>Welcome Back</h2>
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+            <p style="margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">
+                Default credentials: <strong>admin / admin123</strong>
+            </p>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
