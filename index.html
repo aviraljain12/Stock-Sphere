@@ -18,8 +18,8 @@
                 <ul>
                     <li class="active"><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
                     <li><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
-                    <li><a href="#"><i class="fas fa-truck-field"></i> Suppliers</a></li>
-                    <li><a href="#"><i class="fas fa-file-invoice"></i> Reports</a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
+                    <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
                     <hr style="opacity: 0.2; margin: 10px 0;">
                     <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
@@ -37,40 +37,55 @@
 
             <section class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-boxes"></i></div>
+                    <div class="stat-icon">
+                        <i class="fas fa-boxes"></i>
+                    </div>
                     <div class="stat-info">
-                        <h3>Total Items</h3>
-                        <p id="total-items">0</p>
+                        <p>TOTAL ITEMS</p>
+                        <h2 id="total-products">--</h2>
                     </div>
                 </div>
                 <div class="stat-card warning">
-                    <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-icon">
+                        <i class="fas fa-triangle-exclamation"></i>
+                    </div>
                     <div class="stat-info">
-                        <h3>Low Stock</h3>
-                        <p id="low-stock-count">0</p>
+                        <p>LOW STOCK</p>
+                        <h2 id="low-stock-count">--</h2>
                     </div>
                 </div>
-                <div class="stat-card info">
-                    <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
                     <div class="stat-info">
-                        <h3>Inventory Value</h3>
-                        <p id="total-value">$0</p>
+                        <p>INVENTORY VALUE</p>
+                        <h2 id="inventory-value">--</h2>
                     </div>
                 </div>
                 <div class="stat-card success">
-                    <div class="stat-icon"><i class="fas fa-truck"></i></div>
+                    <div class="stat-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
                     <div class="stat-info">
-                        <h3>Active Suppliers</h3>
-                        <p id="active-suppliers">0</p>
+                        <p>ACTIVE SUPPLIERS</p>
+                        <h2 id="total-suppliers">--</h2>
                     </div>
                 </div>
             </section>
 
-            <section class="recent-activity">
+            <section class="quick-actions">
                 <h2>Quick Actions</h2>
-                <div class="action-buttons" style="display: flex; gap: 1rem; margin-top: 1rem;">
-                    <a href="inventory.html" class="btn-primary" style="padding: 10px 20px; text-decoration: none; border-radius: 8px;">Manage Inventory</a>
-                    <button class="btn-secondary" style="padding: 10px 20px; border: none; border-radius: 8px;">Generate Report</button>
+                <div class="action-buttons">
+                    <a href="inventory.html" class="btn btn-primary">Manage Inventory</a>
+                    <a href="reports.html" class="btn btn-secondary">Generate Report</a>
+                </div>
+            </section>
+
+            <section class="recent-activity">
+                <h2>Recent Activity</h2>
+                <div id="recent-activities" class="activity-list">
+                    <!-- Content loaded via app.js -->
                 </div>
             </section>
         </main>
