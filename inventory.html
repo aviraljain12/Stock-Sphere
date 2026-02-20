@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock-Sphere | Inventory</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-boxes-stacked"></i>
+                <span>Stock-Sphere</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                    <li class="active"><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
+                    <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <header>
+                <h1>Inventory Management</h1>
+                <button class="btn-primary" onclick="showAddModal()"><i class="fas fa-plus"></i> Add Item</button>
+            </header>
+
+            <section class="table-container">
+                <div class="table-header">
+                    <input type="text" placeholder="Search SKU, Name..." id="item-search">
+                    <select id="category-filter">
+                        <option value="all">All Categories</option>
+                        <option value="Mechanical">Mechanical</option>
+                        <option value="Electrical">Electrical</option>
+                    </select>
+                </div>
+                <table id="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>SKU</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Supplier</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-list">
+                        <!-- Items injected by JS -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
