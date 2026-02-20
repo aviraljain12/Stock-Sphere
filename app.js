@@ -1,5 +1,6 @@
 // Stock-Sphere Application Logic
 const DB_NAME = 'stock_sphere_db';
+const AUTH_KEY = 'stock_sphere_auth';
 
 const initialData = {
     inventory: [
@@ -11,11 +12,11 @@ const initialData = {
         { id: 2, name: 'ElectraLine', contact: 'Jane Smith', email: 'jane@electra.com', terms: 'Net 15', performance: 'Good' }
     ],
     transactions: [
-        { id: 1, type: 'Inward', itemId: 1, quantity: 50, date: '2026-02-15', reason: 'New Stock' }
+        { id: 1, type: 'Inward', itemId: 1, quantity: 50, date: '2026-02-15', reason: 'New Shipment' }
     ]
 };
 
-// Database Helpers
+// --- Database Helpers ---
 function initDB() {
     if (!localStorage.getItem(DB_NAME)) {
         localStorage.setItem(DB_NAME, JSON.stringify(initialData));
@@ -23,157 +24,156 @@ function initDB() {
 }
 
 function getDB() {
-    return JSON.parse(localStorage.getItem(DB_NAME)) || initialData;
+    const data = localStorage.getItem(DB_NAME);
+    return data ? JSON.parse(data) : initialData;
 }
 
 function updateDB(data) {
     localStorage.setItem(DB_NAME, JSON.stringify(data));
 }
 
-// Dashboard Logic
-function updateDashboard() {
-    const db = getDB();
-    if (!db) return;
-    const totalItems = db.inventory.length;
-    const totalStock = db.inventory.reduce((acc, item) => acc + item.quantity, 0);
-    const lowStockCount = db.inventory.filter(item => item.quantity < 20).length;
-    const totalValuation = db.inventory.reduce((acc, item) => acc + (item.quantity * item.price), 0);
-
-    const stats = {
-        'total-items': totalItems,
-        'total-stock': totalStock,
-        'low-stock': lowStockCount,
-        'valuation': '₹' + totalValuation.toLocaleString()
-    };
-
-    for (const [id, value] of Object.entries(stats)) {
-        const el = document.getElementById(id);
-        if (el) el.innerText = value;
+// --- Authentication Logic ---
+function checkAuth() {
+    const isLoggedIn = localStorage.getItem(AUTH_KEY);
+    const currentPage = window.location.pathname;
+    
+    // Simple path check for GitHub Pages or local
+    const isLoginPage = currentPage.endsWith('login.html');
+    
+    if (!isLoggedIn && !isLoginPage) {
+        window.location.href = 'login.html';
+    } else if (isLoggedIn && isLoginPage) {
+        window.location.href = 'index.html';
     }
 }
 
-// Inventory Logic
-function renderInventory(filterText = '') {
-    const list = document.getElementById('inventory-list');
-    if (!list) return;
+function logout() {
+    localStorage.removeItem(AUTH_KEY);
+    window.location.href = 'login.html';
+}
+
+// --- UI Logic ---
+function updateDashboard() {
+    const db = getDB();
+    const totalItems = db.inventory.length;
+    const lowStockItems = db.inventory.filter(item => item.quantity < 20).length;
+    const totalValue = db.inventory.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+    const elements = {
+        'total-items': totalItems,
+        'low-stock-count': lowStockItems,
+        'total-value': `$${totalValue.toLocaleString()}`,
+        'active-suppliers': db.suppliers.length
+    };
+
+    for (const [id, value] of Object.entries(elements)) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    }
+}
+
+function renderInventory() {
+    const inventoryTable = document.getElementById('inventory-table-body');
+    if (!inventoryTable) return;
 
     const db = getDB();
-    const filtered = db.inventory.filter(item => 
-        item.name.toLowerCase().includes(filterText.toLowerCase()) || 
-        item.sku.toLowerCase().includes(filterText.toLowerCase())
-    );
-
-    list.innerHTML = filtered.map(item => `
+    inventoryTable.innerHTML = db.inventory.map(item => `
         <tr>
             <td>${item.sku}</td>
             <td>${item.name}</td>
             <td>${item.category}</td>
-            <td>${item.quantity} ${item.unit}</td>
-            <td>₹${item.price}</td>
-            <td>${item.supplier}</td>
-            <td><span class="badge ${item.quantity < 20 ? 'badge-warning' : 'badge-success'}">${item.quantity < 20 ? 'Low Stock' : 'In Stock'}</span></td>
+            <td class="${item.quantity < 20 ? 'text-danger fw-bold' : ''}">${item.quantity} ${item.unit}</td>
+            <td>$${item.price}</td>
+            <td><span class="badge ${item.quantity < 20 ? 'bg-warning' : 'bg-success'}">${item.status}</span></td>
             <td>
-                <button class="btn btn-sm btn-primary" onclick="editItem(${item.id})"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-sm btn-danger" onclick="deleteItem(${item.id})"><i class="fas fa-trash"></i></button>
+                <button class="btn btn-sm btn-outline-primary" onclick="window.editItem(${item.id})">Edit</button>
+                <button class="btn btn-sm btn-outline-danger" onclick="window.deleteItem(${item.id})">Delete</button>
             </td>
         </tr>
     `).join('');
 }
 
-function saveItem(e) {
-    e.preventDefault();
-    const db = getDB();
-    const formData = new FormData(e.target);
-    const id = formData.get('item-id');
+// --- Event Handlers ---
+document.addEventListener('DOMContentLoaded', () => {
+    initDB();
+    checkAuth();
 
-    const itemData = {
-        name: formData.get('name'),
-        sku: formData.get('sku'),
-        category: formData.get('category'),
-        quantity: parseInt(formData.get('quantity')),
-        price: parseFloat(formData.get('price')),
-        unit: formData.get('unit'),
-        supplier: formData.get('supplier')
-    };
+    // Login Form Handler
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
 
-    if (id) {
-        // Edit
-        const index = db.inventory.findIndex(item => item.id == id);
-        db.inventory[index] = { ...db.inventory[index], ...itemData };
-    } else {
-        // Add
-        itemData.id = Date.now();
-        db.inventory.push(itemData);
-        db.transactions.push({
-            id: Date.now(),
-            type: 'Inward',
-            itemId: itemData.id,
-            quantity: itemData.quantity,
-            date: new Date().toISOString().split('T')[0],
-            reason: 'Initial Entry'
+            if (user === 'admin' && pass === 'admin123') {
+                localStorage.setItem(AUTH_KEY, 'true');
+                window.location.href = 'index.html';
+            } else {
+                alert('Invalid credentials! Use admin / admin123');
+            }
         });
     }
 
-    updateDB(db);
-    closeModal();
-    renderInventory();
-}
+    // Inventory Form Handler
+    const inventoryForm = document.getElementById('inventory-form');
+    if (inventoryForm) {
+        inventoryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const db = getDB();
+            const newItem = {
+                id: Date.now(),
+                name: document.getElementById('item-name').value,
+                sku: document.getElementById('item-sku').value,
+                category: document.getElementById('item-category').value,
+                quantity: parseInt(document.getElementById('item-quantity').value),
+                price: parseFloat(document.getElementById('item-price').value),
+                unit: 'pcs',
+                supplier: 'Manual Entry',
+                status: parseInt(document.getElementById('item-quantity').value) < 20 ? 'Low Stock' : 'In Stock'
+            };
+            db.inventory.push(newItem);
+            updateDB(db);
+            renderInventory();
+            inventoryForm.reset();
+            
+            // Close modal using bootstrap API if available
+            const modalEl = document.getElementById('addItemModal');
+            if (window.bootstrap && modalEl) {
+                const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                modal.hide();
+            }
+        });
+    }
 
-function deleteItem(id) {
+    // Logout Button handler
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
+    }
+
+    // Initialize Page Content
+    if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/Stock-Sphere/')) {
+        updateDashboard();
+    }
+    if (window.location.pathname.includes('inventory.html')) {
+        renderInventory();
+    }
+});
+
+// Global functions for inline onclick handlers
+window.deleteItem = (id) => {
     if (confirm('Are you sure you want to delete this item?')) {
         const db = getDB();
-        db.inventory = db.inventory.filter(item => item.id != id);
+        db.inventory = db.inventory.filter(item => item.id !== id);
         updateDB(db);
         renderInventory();
     }
-}
+};
 
-function editItem(id) {
-    openModal('Edit Item', id);
-}
-
-// Modal Helpers
-function openModal(title, itemId = null) {
-    const modal = document.getElementById('item-modal');
-    if (!modal) return;
-    document.getElementById('modal-title').innerText = title;
-    const form = document.getElementById('item-form');
-    form.reset();
-    document.getElementById('item-id').value = itemId || '';
-
-    if (itemId) {
-        const item = getDB().inventory.find(i => i.id == itemId);
-        if (item) {
-            for (const key in item) {
-                const input = form.elements[key];
-                if (input) input.value = item[key];
-            }
-        }
-    }
-    modal.classList.add('active');
-}
-
-function closeModal() {
-    const modal = document.getElementById('item-modal');
-    if (modal) modal.classList.remove('active');
-}
-
-// Global Initialization
-document.addEventListener('DOMContentLoaded', () => {
-    initDB();
-    
-    // Auto-routing logic
-    if (document.getElementById('total-items')) updateDashboard();
-    if (document.getElementById('inventory-list')) renderInventory();
-
-    // Event listeners
-    const searchInput = document.getElementById('search-inventory');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => renderInventory(e.target.value));
-    }
-
-    const itemForm = document.getElementById('item-form');
-    if (itemForm) {
-        itemForm.addEventListener('submit', saveItem);
-    }
-});
+window.editItem = (id) => {
+    alert('Edit functionality coming soon! ID: ' + id);
+};
