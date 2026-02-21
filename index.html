@@ -20,7 +20,7 @@
                     <li><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
                     <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
                     <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
-                    <hr style="opacity: 0.2; margin: 10px 0;">
+                    <hr style="opacity: 0.1; margin: 10px 0;">
                     <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </nav>
@@ -35,59 +35,66 @@
                 </div>
             </header>
 
-            <section class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-boxes"></i>
+            <div class="main-inner">
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-info">
+                            <h3>Total Items</h3>
+                            <p id="total-products">--</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
                     </div>
-                    <div class="stat-info">
-                        <p>TOTAL ITEMS</p>
-                        <h2 id="total-products">--</h2>
+                    <div class="stat-card danger">
+                        <div class="stat-info">
+                            <h3>Low Stock</h3>
+                            <p id="low-stock-count">--</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
                     </div>
-                </div>
-                <div class="stat-card warning">
-                    <div class="stat-icon">
-                        <i class="fas fa-triangle-exclamation"></i>
+                    <div class="stat-card success">
+                        <div class="stat-info">
+                            <h3>Inventory Value</h3>
+                            <p id="inventory-value">--</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-indian-rupee-sign"></i></div>
                     </div>
-                    <div class="stat-info">
-                        <p>LOW STOCK</p>
-                        <h2 id="low-stock-count">--</h2>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-rupee-sign"></i>
-                    </div>
-                    <div class="stat-info">
-                        <p>INVENTORY VALUE</p>
-                        <h2 id="inventory-value">--</h2>
-                    </div>
-                </div>
-                <div class="stat-card success">
-                    <div class="stat-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <div class="stat-info">
-                        <p>ACTIVE SUPPLIERS</p>
-                        <h2 id="total-suppliers">--</h2>
+                    <div class="stat-card warning">
+                        <div class="stat-info">
+                            <h3>Active Suppliers</h3>
+                            <p id="total-suppliers">--</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-truck-field"></i></div>
                     </div>
                 </div>
-            </section>
 
-            <section class="quick-actions">
-                <h2>Quick Actions</h2>
-                <div class="action-buttons">
-                    <a href="inventory.html" class="btn btn-primary">Manage Inventory</a>
-                    <a href="reports.html" class="btn btn-secondary">Generate Report</a>
-                </div>
-            </section>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2>Quick Actions</h2>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <a href="inventory.html" class="btn btn-primary" style="text-decoration: none; justify-content: center;">
+                                <i class="fas fa-warehouse"></i> Manage Inventory
+                            </a>
+                            <a href="suppliers.html" class="btn btn-outline" style="text-decoration: none; justify-content: center;">
+                                <i class="fas fa-truck-field"></i> View Suppliers
+                            </a>
+                            <a href="reports.html" class="btn btn-outline" style="text-decoration: none; justify-content: center;">
+                                <i class="fas fa-file-invoice"></i> Generate Report
+                            </a>
+                        </div>
+                    </div>
 
-            <section class="recent-activity">
-                <h2>Recent Activity</h2>
-                <div id="recent-activities" class="activity-list">
-                    <!-- Content loaded via app.js -->
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h2>Recent Activity</h2>
+                        </div>
+                        <div class="activity-list" id="recent-activities">
+                            <!-- Filled by app.js -->
+                        </div>
+                    </div>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
 
