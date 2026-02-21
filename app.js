@@ -1,5 +1,4 @@
 // Stock-Sphere Application Logic
-//checking PR
 const DB_NAME = 'stock_sphere_db';
 const AUTH_KEY = 'stock_sphere_auth';
 
