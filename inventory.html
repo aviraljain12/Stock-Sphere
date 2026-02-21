@@ -6,7 +6,6 @@
     <title>Stock-Sphere | Inventory</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -19,9 +18,9 @@
                 <ul>
                     <li><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
                     <li class="active"><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
-                    <li><a href="#"><i class="fas fa-truck-field"></i> Suppliers</a></li>
-                    <li><a href="#"><i class="fas fa-file-invoice"></i> Reports</a></li>
-                    <hr style="opacity: 0.2; margin: 10px 0;">
+                    <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
+                    <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
+                    <hr style="opacity: 0.1; margin: 10px 0;">
                     <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 </ul>
             </nav>
@@ -30,79 +29,115 @@
         <main class="content">
             <header>
                 <h1>Inventory Management</h1>
-                <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#addItemModal" style="padding: 10px 20px; border: none; border-radius: 8px;">
-                    <i class="fas fa-plus"></i> Add New Item
-                </button>
+                <div class="user-profile">
+                    <span>Admin</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
             </header>
 
-            <section class="table-container card mt-4" style="background: var(--bg-color); border: 1px solid rgba(255,255,255,0.1);">
-                <div class="p-3">
-                    <table class="table table-hover" style="color: var(--text-primary);">
-                        <thead>
-                            <tr style="border-bottom: 2px solid var(--primary-color);">
-                                <th>SKU</th>
-                                <th>Product Name</th>
-                                <th>Category</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inventory-table-body">
-                            <!-- Content loaded via app.js -->
-                        </tbody>
-                    </table>
+            <div class="main-inner">
+                <div class="stats-grid">
+                    <div class="stat-card primary">
+                        <div class="stat-info">
+                            <h3>Total Products</h3>
+                            <p id="total-products">--</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-box"></i></div>
+                    </div>
+                    <div class="stat-card success">
+                        <div class="stat-info">
+                            <h3>Stock Value</h3>
+                            <p id="inventory-value">--</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-indian-rupee-sign"></i></div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-info">
+                            <h3>Low Stock</h3>
+                            <p id="low-stock-count">--</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    </div>
                 </div>
-            </section>
+
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>Inventory Items</h2>
+                        <button class="btn btn-primary" onclick="document.getElementById('addItemModal').classList.add('active')">
+                            <i class="fas fa-plus"></i> Add Item
+                        </button>
+                    </div>
+
+                    <div class="toolbar">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="inventory-search" placeholder="Search by SKU, Name or Category...">
+                        </div>
+                        <button class="btn btn-outline"><i class="fas fa-filter"></i> Filter</button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Supplier</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
-    <!-- Add Item Modal -->
-    <div class="modal fade" id="addItemModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content" style="background: #1e1e2f; color: white; border: 1px solid #6d5dfc;">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add New Inventory Item</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="inventory-form">
-                        <div class="mb-3">
-                            <label class="form-label">SKU</label>
-                            <input type="text" id="item-sku" class="form-control bg-dark text-white border-secondary" required placeholder="e.g. IV-001">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Product Name</label>
-                            <input type="text" id="item-name" class="form-control bg-dark text-white border-secondary" required placeholder="e.g. Industrial Valve">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Category</label>
-                            <select id="item-category" class="form-select bg-dark text-white border-secondary">
-                                <option value="Mechanical">Mechanical</option>
-                                <option value="Electrical">Electrical</option>
-                                <option value="Chemical">Chemical</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div class="row">
-                            <div class="col mb-3">
-                                <label class="form-label">Quantity</label>
-                                <input type="number" id="item-quantity" class="form-control bg-dark text-white border-secondary" required value="0">
-                            </div>
-                            <div class="col mb-3">
-                                <label class="form-label">Price ($)</label>
-                                <input type="number" id="item-price" class="form-control bg-dark text-white border-secondary" required value="0" step="0.01">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100" style="background: #6d5dfc; border: none;">Save Item</button>
-                    </form>
-                </div>
+    <div id="addItemModal" class="modal">
+        <div class="modal-content">
+            <div class="section-header">
+                <h2>Add New Item</h2>
+                <button class="btn btn-outline" onclick="document.getElementById('addItemModal').classList.remove('active')">&times;</button>
             </div>
+            <form id="add-item-form">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" class="form-control" id="item-name" required>
+                </div>
+                <div class="form-group">
+                    <label>SKU</label>
+                    <input type="text" class="form-control" id="item-sku" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-control" id="item-category">
+                        <option>Mechanical</option>
+                        <option>Electrical</option>
+                        <option>Chemical</option>
+                        <option>Tools</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Quantity</label>
+                        <input type="number" class="form-control" id="item-quantity" required>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Price</label>
+                        <input type="number" class="form-control" id="item-price" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Add to Inventory</button>
+            </form>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
