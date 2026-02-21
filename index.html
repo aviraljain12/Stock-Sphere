@@ -1,103 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock-Sphere | Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock-Sphere | Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <div class="logo">
-                <i class="fas fa-boxes-stacked"></i>
-                <span>Stock-Sphere</span>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">
+        <i class="fas fa-boxes-stacked"></i>
+        <span>Stock-Sphere</span>
+      </div>
+      <nav>
+        <ul>
+          <li class="active"><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+          <li><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
+          <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
+          <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
+          <hr style="opacity: 0.1; margin: 20px 0;">
+          <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header>
+        <div>
+          <h1>Dashboard Overview</h1>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Last updated: 2 mins ago</p>
+        </div>
+        <div class="user-profile">
+          <span>Welcome, Admin</span>
+          <i class="fas fa-user-circle"></i>
+        </div>
+      </header>
+
+      <div class="main-inner">
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-info">
+              <h3>Total Items</h3>
+              <p id="total-products">--</p>
             </div>
-            <nav>
-                <ul>
-                    <li class="active"><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-                    <li><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
-                    <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
-                    <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
-                    <hr style="opacity: 0.1; margin: 10px 0;">
-                    <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <main class="content">
-            <header>
-                <h1>Dashboard Overview</h1>
-                <div class="user-profile">
-                    <span>Admin</span>
-                    <i class="fas fa-user-circle"></i>
-                </div>
-            </header>
-
-            <div class="main-inner">
-                <div class="stats-grid">
-                    <div class="stat-card primary">
-                        <div class="stat-info">
-                            <h3>Total Items</h3>
-                            <p id="total-products">--</p>
-                        </div>
-                        <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
-                    </div>
-                    <div class="stat-card danger">
-                        <div class="stat-info">
-                            <h3>Low Stock</h3>
-                            <p id="low-stock-count">--</p>
-                        </div>
-                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
-                    </div>
-                    <div class="stat-card success">
-                        <div class="stat-info">
-                            <h3>Inventory Value</h3>
-                            <p id="inventory-value">--</p>
-                        </div>
-                        <div class="stat-icon"><i class="fas fa-indian-rupee-sign"></i></div>
-                    </div>
-                    <div class="stat-card warning">
-                        <div class="stat-info">
-                            <h3>Active Suppliers</h3>
-                            <p id="total-suppliers">--</p>
-                        </div>
-                        <div class="stat-icon"><i class="fas fa-truck-field"></i></div>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                    <div class="section-card">
-                        <div class="section-header">
-                            <h2>Quick Actions</h2>
-                        </div>
-                        <div style="display: flex; flex-direction: column; gap: 12px;">
-                            <a href="inventory.html" class="btn btn-primary" style="text-decoration: none; justify-content: center;">
-                                <i class="fas fa-warehouse"></i> Manage Inventory
-                            </a>
-                            <a href="suppliers.html" class="btn btn-outline" style="text-decoration: none; justify-content: center;">
-                                <i class="fas fa-truck-field"></i> View Suppliers
-                            </a>
-                            <a href="reports.html" class="btn btn-outline" style="text-decoration: none; justify-content: center;">
-                                <i class="fas fa-file-invoice"></i> Generate Report
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="section-card">
-                        <div class="section-header">
-                            <h2>Recent Activity</h2>
-                        </div>
-                        <div class="activity-list" id="recent-activities">
-                            <!-- Filled by app.js -->
-                        </div>
-                    </div>
-                </div>
+            <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
+          </div>
+          
+          <div class="stat-card danger">
+            <div class="stat-info">
+              <h3>Low Stock</h3>
+              <p id="low-stock-count">--</p>
             </div>
-        </main>
-    </div>
+            <div class="stat-icon"><i class="fas fa-triangle-exclamation"></i></div>
+          </div>
 
-    <script src="app.js"></script>
+          <div class="stat-card success">
+            <div class="stat-info">
+              <h3>Inventory Value</h3>
+              <p id="inventory-value">--</p>
+            </div>
+            <div class="stat-icon"><i class="fas fa-indian-rupee-sign"></i></div>
+          </div>
+
+          <div class="stat-card warning">
+            <div class="stat-info">
+              <h3>Active Suppliers</h3>
+              <p id="total-suppliers">--</p>
+            </div>
+            <div class="stat-icon"><i class="fas fa-truck-field"></i></div>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+          <div class="section-card">
+            <div class="section-header">
+              <h2>Quick Actions</h2>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <a href="inventory.html" class="btn btn-primary" style="text-decoration: none; justify-content: center; width: 100%;">
+                <i class="fas fa-warehouse"></i> Manage Inventory
+              </a>
+              <a href="suppliers.html" class="btn btn-outline" style="text-decoration: none; justify-content: center; width: 100%;">
+                <i class="fas fa-truck-field"></i> View Suppliers
+              </a>
+              <a href="reports.html" class="btn btn-outline" style="text-decoration: none; justify-content: center; width: 100%;">
+                <i class="fas fa-file-invoice"></i> Generate Reports
+              </a>
+            </div>
+          </div>
+
+          <div class="section-card">
+            <div class="section-header">
+              <h2>Recent Activity</h2>
+            </div>
+            <div class="activity-list" id="recent-activities">
+              <!-- Filled by app.js -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
 </body>
 </html>
