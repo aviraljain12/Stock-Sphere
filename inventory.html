@@ -56,65 +56,63 @@
                             <h3>Low Stock</h3>
                             <p id="low-stock-count">--</p>
                         </div>
-                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-icon"><i class="fas fa-triangle-exclamation"></i></div>
                     </div>
                 </div>
 
-                <div class="section-card">
+                <div class="table-container">
                     <div class="section-header">
                         <h2>Inventory Items</h2>
-                        <button class="btn btn-primary" onclick="document.getElementById('addItemModal').classList.add('active')">
-                            <i class="fas fa-plus"></i> Add Item
-                        </button>
-                    </div>
-
-                    <div class="toolbar">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="inventory-search" placeholder="Search by SKU, Name or Category...">
+                        <div class="actions">
+                            <button class="btn btn-primary" onclick="document.getElementById('addItemModal').classList.add('active')">
+                                <i class="fas fa-plus"></i> Add Item
+                            </button>
                         </div>
-                        <button class="btn btn-outline"><i class="fas fa-filter"></i> Filter</button>
+                    </div>
+                    
+                    <div class="search-bar" style="margin-bottom: 20px;">
+                        <input type="text" id="inventory-search" class="form-control" placeholder="Search by SKU, Name or Category..." style="margin-bottom: 0;">
                     </div>
 
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>SKU</th>
-                                    <th>Product Name</th>
-                                    <th>Category</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Supplier</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="inventory-table-body">
-                            </tbody>
-                        </table>
-                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Supplier</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table-body">
+                            <!-- Filled by app.js -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </main>
     </div>
 
-    <div id="addItemModal" class="modal">
+    <!-- Add Item Modal -->
+    <div class="modal" id="addItemModal">
         <div class="modal-content">
             <div class="section-header">
                 <h2>Add New Item</h2>
-                <button class="btn btn-outline" onclick="document.getElementById('addItemModal').classList.remove('active')">&times;</button>
+                <i class="fas fa-times" style="cursor: pointer;" onclick="document.getElementById('addItemModal').classList.remove('active')"></i>
             </div>
             <form id="add-item-form">
-                <div class="form-group">
+                <div class="input-group">
                     <label>Product Name</label>
                     <input type="text" class="form-control" id="item-name" required>
                 </div>
-                <div class="form-group">
+                <div class="input-group">
                     <label>SKU</label>
                     <input type="text" class="form-control" id="item-sku" required>
                 </div>
-                <div class="form-group">
+                <div class="input-group">
                     <label>Category</label>
                     <select class="form-control" id="item-category">
                         <option>Mechanical</option>
@@ -123,17 +121,17 @@
                         <option>Tools</option>
                     </select>
                 </div>
-                <div style="display: flex; gap: 15px;">
-                    <div class="form-group" style="flex: 1;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="input-group">
                         <label>Quantity</label>
                         <input type="number" class="form-control" id="item-quantity" required>
                     </div>
-                    <div class="form-group" style="flex: 1;">
+                    <div class="input-group">
                         <label>Price</label>
                         <input type="number" class="form-control" id="item-price" required>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Add to Inventory</button>
+                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">Add to Inventory</button>
             </form>
         </div>
     </div>
