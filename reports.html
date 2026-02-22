@@ -6,6 +6,34 @@
     <title>Stock-Sphere | Reports</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @media print {
+            .sidebar, header, .section-header .btn, #print-report-btn {
+                display: none !important;
+            }
+            .content { margin-left: 0 !important; }
+            .main-inner { padding: 10px !important; }
+            body { background: #fff !important; }
+        }
+        .report-section {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            margin-bottom: 30px;
+            border: 1px solid rgba(109,93,252,0.05);
+        }
+        .report-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .report-section h3 i { color: var(--primary); }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -36,15 +64,17 @@
             </header>
 
             <div class="main-inner">
-                <div class="section-card">
-                    <div class="section-header">
-                        <h2>Stock Reports</h2>
-                        <button class="btn btn-outline" onclick="window.print()">
-                            <i class="fas fa-print"></i> Print Report
-                        </button>
-                    </div>
-                    <div id="reports-content">
-                        <!-- Reports injected by app.js -->
+                <div class="section-header" style="margin-bottom: 24px;">
+                    <h2>Stock Reports</h2>
+                    <button class="btn btn-outline" id="print-report-btn">
+                        <i class="fas fa-print"></i> Print Report
+                    </button>
+                </div>
+
+                <div id="reports-content">
+                    <div style="text-align:center; padding: 60px;">
+                        <i class="fas fa-circle-notch fa-spin" style="font-size: 2.5rem; color: var(--primary);"></i>
+                        <p style="margin-top: 14px; color: var(--text-muted);">Loading report...</p>
                     </div>
                 </div>
             </div>
