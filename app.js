@@ -98,7 +98,38 @@ function updateDashboard() {
         const el = document.getElementById(id);
         if (el) el.textContent = value;
     }
+
     renderRecentTransactions(db);
+    renderDashboardCharts(db);
+}
+
+function renderDashboardCharts(db) {
+    const ctx = document.getElementById('dashboardChart');
+    if (!ctx || !window.Chart) return;
+
+    const categories = {};
+    db.inventory.forEach(item => {
+        categories[item.category] = (categories[item.category] || 0) + item.quantity;
+    });
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(categories),
+            datasets: [{
+                data: Object.values(categories),
+                backgroundColor: ['#6d5dfc', '#9288f8', '#00c897', '#ffb800', '#ff4d4d'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            },
+            cutout: '70%'
+        }
+    });
 }
 
 function renderRecentTransactions(db) {
@@ -110,8 +141,13 @@ function renderRecentTransactions(db) {
         const item = db.inventory.find(i => i.id === t.itemId);
         return `
             <div class="activity-item">
-                <h4>${t.type}: ${item ? item.name : 'Unknown'}</h4>
-                <p>${t.date} • Qty: ${t.quantity} • ${t.reason}</p>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h4>${t.type}: ${item ? item.name : 'Unknown'}</h4>
+                        <p>${t.date} • Qty: ${t.quantity} • ${t.reason}</p>
+                    </div>
+                    <span class="badge ${t.type === 'Inward' ? 'success' : 'danger'}">${t.type}</span>
+                </div>
             </div>
         `;
     }).join('');
@@ -154,12 +190,34 @@ function renderInventoryTable(filter = '') {
             <td>${item.supplier}</td>
             <td>${getStatusBadge(item.status)}</td>
             <td>
-                <button class="btn btn-sm btn-outline" onclick="deleteItem(${item.id})" style="padding: 5px 10px;">
-                    <i class="fas fa-trash"></i>
-                </button>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-sm btn-outline" onclick="openEditItemModal(${item.id})">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline" onclick="deleteItem(${item.id})" style="color: var(--danger); border-color: var(--danger);">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             </td>
         </tr>
     `).join('') : '<tr><td colspan="8" style="text-align:center;">No items found</td></tr>';
+}
+
+function openEditItemModal(id) {
+    const db = getDB();
+    const item = db.inventory.find(i => i.id === id);
+    if (!item) return;
+
+    document.getElementById('modal-title').textContent = 'Edit Item';
+    document.getElementById('item-id').value = item.id;
+    document.getElementById('item-name').value = item.name;
+    document.getElementById('item-sku').value = item.sku;
+    document.getElementById('item-category').value = item.category;
+    document.getElementById('item-quantity').value = item.quantity;
+    document.getElementById('item-price').value = item.price;
+    document.getElementById('item-unit').value = item.unit;
+    
+    document.getElementById('addItemModal').classList.add('active');
 }
 
 function deleteItem(id) {
@@ -170,11 +228,71 @@ function deleteItem(id) {
     renderInventoryTable();
 }
 
+// --- Supplier Logic ---
+function renderSupplierTable(filter = '') {
+    const tableBody = document.getElementById('supplier-table-body');
+    if (!tableBody) return;
+
+    const db = getDB();
+    let suppliers = db.suppliers;
+
+    if (filter) {
+        const q = filter.toLowerCase();
+        suppliers = suppliers.filter(s => 
+            s.name.toLowerCase().includes(q) || 
+            s.email.toLowerCase().includes(q) || 
+            s.contact.toLowerCase().includes(q)
+        );
+    }
+
+    tableBody.innerHTML = suppliers.length > 0 ? suppliers.map(s => `
+        <tr>
+            <td><strong>${s.name}</strong></td>
+            <td>${s.contact}</td>
+            <td>${s.email}</td>
+            <td>${s.terms}</td>
+            <td>${getPerformanceBadge(s.performance)}</td>
+            <td>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-sm btn-outline" onclick="openEditSupplierModal(${s.id})">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline" onclick="deleteSupplier(${s.id})" style="color: var(--danger); border-color: var(--danger);">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join('') : '<tr><td colspan="6" style="text-align:center;">No suppliers found</td></tr>';
+}
+
+function openEditSupplierModal(id) {
+    const db = getDB();
+    const s = db.suppliers.find(sup => sup.id === id);
+    if (!s) return;
+
+    document.getElementById('supplier-modal-title').textContent = 'Edit Supplier';
+    document.getElementById('supplier-id').value = s.id;
+    document.getElementById('supplier-name').value = s.name;
+    document.getElementById('supplier-contact').value = s.contact;
+    document.getElementById('supplier-email').value = s.email;
+    document.getElementById('supplier-terms').value = s.terms;
+    
+    document.getElementById('addSupplierModal').classList.add('active');
+}
+
+function deleteSupplier(id) {
+    if (!confirm('Are you sure you want to delete this supplier?')) return;
+    const db = getDB();
+    db.suppliers = db.suppliers.filter(s => s.id !== id);
+    updateDB(db);
+    renderSupplierTable();
+}
+
 // --- Reports Logic ---
 function renderReports() {
     const container = document.getElementById('reports-content');
     if (!container) return;
-
     const db = getDB();
     const inventory = db.inventory;
     
@@ -226,7 +344,6 @@ function renderReports() {
     html += '</div>';
     container.innerHTML = html;
 
-    // Initialize Chart
     if (window.Chart) {
         const ctx = document.getElementById('categoryChart').getContext('2d');
         new Chart(ctx, {
@@ -263,38 +380,35 @@ document.addEventListener('DOMContentLoaded', () => {
     // Determine current page and render
     if (document.getElementById('recent-activities')) updateDashboard();
     if (document.getElementById('inventory-table-body')) renderInventoryTable();
+    if (document.getElementById('supplier-table-body')) renderSupplierTable();
     if (document.getElementById('reports-content')) renderReports();
-    if (document.getElementById('supplier-table-body')) {
-        // Simple placeholder for supplier rendering if needed
-        const db = getDB();
-        const body = document.getElementById('supplier-table-body');
-        body.innerHTML = db.suppliers.map(s => `
-            <tr>
-                <td><strong>${s.name}</strong></td>
-                <td>${s.contact}</td>
-                <td>${s.email}</td>
-                <td>${s.terms}</td>
-                <td>${getPerformanceBadge(s.performance)}</td>
-            </tr>
-        `).join('');
+
+    // Search handlers
+    const invSearch = document.getElementById('inventory-search');
+    if (invSearch) invSearch.addEventListener('input', (e) => renderInventoryTable(e.target.value));
+
+    const supSearch = document.getElementById('supplier-search');
+    if (supSearch) supSearch.addEventListener('input', (e) => renderSupplierTable(e.target.value));
+
+    // Logout handler
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
+        });
     }
 
-    // Inventory search
-    const searchInput = document.getElementById('inventory-search');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => renderInventoryTable(e.target.value));
-    }
-
-    // Add item form logic (Fixes Issue 1 & 2)
+    // Add/Edit Item Form
     const addItemForm = document.getElementById('add-item-form');
     if (addItemForm) {
         addItemForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const db = getDB();
-            
+            const id = document.getElementById('item-id').value;
             const quantity = parseInt(document.getElementById('item-quantity').value);
-            const newItem = {
-                id: Date.now(),
+            
+            const itemData = {
                 name: document.getElementById('item-name').value,
                 sku: document.getElementById('item-sku').value,
                 category: document.getElementById('item-category').value,
@@ -305,24 +419,72 @@ document.addEventListener('DOMContentLoaded', () => {
                 status: quantity < 20 ? 'Low Stock' : 'In Stock'
             };
 
-            db.inventory.push(newItem);
+            if (id) {
+                // Update existing
+                const index = db.inventory.findIndex(i => i.id == id);
+                if (index !== -1) {
+                    db.inventory[index] = { ...db.inventory[index], ...itemData };
+                }
+            } else {
+                // Add new
+                itemData.id = Date.now();
+                db.inventory.push(itemData);
+            }
+
             updateDB(db);
-            
-            // Close modal
-            const modal = document.getElementById('addItemModal');
-            if (modal) modal.classList.remove('active');
-            
+            document.getElementById('addItemModal').classList.remove('active');
             addItemForm.reset();
+            document.getElementById('item-id').value = '';
+            document.getElementById('modal-title').textContent = 'Add New Item';
             renderInventoryTable();
         });
     }
-    
-    // Print button handler (Fixes Issue 3)
-    const printBtn = document.getElementById('print-report-btn');
-    if (printBtn) {
-        printBtn.addEventListener('click', (e) => {
+
+    // Add/Edit Supplier Form
+    const addSupplierForm = document.getElementById('add-supplier-form');
+    if (addSupplierForm) {
+        addSupplierForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            printReport();
+            const db = getDB();
+            const id = document.getElementById('supplier-id').value;
+            
+            const supplierData = {
+                name: document.getElementById('supplier-name').value,
+                contact: document.getElementById('supplier-contact').value,
+                email: document.getElementById('supplier-email').value,
+                terms: document.getElementById('supplier-terms').value,
+                performance: 'Good' // Default
+            };
+
+            if (id) {
+                const index = db.suppliers.findIndex(s => s.id == id);
+                if (index !== -1) {
+                    db.suppliers[index] = { ...db.suppliers[index], ...supplierData };
+                }
+            } else {
+                supplierData.id = Date.now();
+                db.suppliers.push(supplierData);
+            }
+
+            updateDB(db);
+            document.getElementById('addSupplierModal').classList.remove('active');
+            addSupplierForm.reset();
+            document.getElementById('supplier-id').value = '';
+            document.getElementById('supplier-modal-title').textContent = 'Add New Supplier';
+            renderSupplierTable();
+        });
+    }
+
+    // Login Form
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            if (!login(user, pass)) {
+                alert('Invalid credentials!');
+            }
         });
     }
 });
