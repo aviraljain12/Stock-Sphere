@@ -21,7 +21,7 @@
                 <ul>
                     <li><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
                     <li class="active"><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
-                    <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
+                    <li><a href="suppliers.html"><i class="fas fa-truck"></i> Suppliers</a></li>
                     <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
                     <hr style="opacity: 0.1; margin: 10px 0;">
                     <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -45,34 +45,30 @@
                             <h3>Total Products</h3>
                             <p id="total-products">--</p>
                         </div>
-                        <div class="stat-icon"><i class="fas fa-box"></i></div>
+                        <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
                     </div>
                     <div class="stat-card success">
                         <div class="stat-info">
                             <h3>Stock Value</h3>
                             <p id="inventory-value">--</p>
                         </div>
-                        <div class="stat-icon"><i class="fas fa-indian-rupee-sign"></i></div>
+                        <div class="stat-icon"><i class="fas fa-rupee-sign"></i></div>
                     </div>
-                    <div class="stat-card warning">
+                    <div class="stat-card danger">
                         <div class="stat-info">
                             <h3>Low Stock</h3>
                             <p id="low-stock-count">--</p>
                         </div>
-                        <div class="stat-icon"><i class="fas fa-triangle-exclamation"></i></div>
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
                     </div>
                 </div>
 
                 <div class="table-container">
                     <div class="section-header">
                         <h2>Inventory Items</h2>
-                        <button class="btn btn-primary" onclick="document.getElementById('addItemModal').classList.add('active')">
-                            <i class="fas fa-plus"></i> Add Item
-                        </button>
+                        <button class="btn btn-primary" onclick="document.getElementById('addItemModal').classList.add('active')"><i class="fas fa-plus"></i> Add Item</button>
                     </div>
-
                     <input type="text" id="inventory-search" class="form-control" placeholder="Search by SKU, Name or Category..." style="margin-bottom: 16px;">
-
                     <table>
                         <thead>
                             <tr>
@@ -86,53 +82,50 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="inventory-table-body">
-                            <!-- JS Rendered -->
-                        </tbody>
+                        <tbody id="inventory-table-body"></tbody>
                     </table>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Modal for Add/Edit Item -->
+    <!-- Add/Edit Item Modal -->
     <div class="modal-overlay" id="addItemModal">
         <div class="modal-box">
-            <button class="modal-close" onclick="document.getElementById('addItemModal').classList.remove('active')">&times;</button>
+            <button class="modal-close" onclick="document.getElementById('addItemModal').classList.remove('active'); document.getElementById('add-item-form').reset(); document.getElementById('item-id').value=''; document.getElementById('modal-title').textContent='Add New Item';">&#x00D7;</button>
             <h2 id="modal-title">Add New Item</h2>
             <form id="add-item-form">
                 <input type="hidden" id="item-id">
-                <label>Product Name</label>
+                <label for="item-name">Product Name</label>
                 <input type="text" class="form-control" id="item-name" placeholder="Enter product name" required>
-                
-                <label>SKU</label>
+                <label for="item-sku">SKU</label>
                 <input type="text" class="form-control" id="item-sku" placeholder="e.g. IV-005" required>
-                
-                <label>Category</label>
+                <label for="item-category">Category</label>
                 <select class="form-control" id="item-category">
                     <option>Mechanical</option>
                     <option>Electrical</option>
                     <option>Chemical</option>
                     <option>Tools</option>
                 </select>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                     <div>
-                        <label>Quantity</label>
+                        <label for="item-quantity">Quantity</label>
                         <input type="number" class="form-control" id="item-quantity" placeholder="Qty" min="0" required>
                     </div>
                     <div>
-                        <label>Unit</label>
+                        <label for="item-unit">Unit</label>
                         <input type="text" class="form-control" id="item-unit" placeholder="e.g. pcs" value="pcs">
                     </div>
                 </div>
-
-                <label>Price (₹)</label>
+                <label for="item-price">Price (&#8377;)</label>
                 <input type="number" class="form-control" id="item-price" placeholder="Price per unit" min="0" step="0.01" required>
-
-                <div style="margin-top: 10px; display: flex; gap: 10px;">
+                <label for="item-supplier">Supplier</label>
+                <select class="form-control" id="item-supplier">
+                    <option value="">-- Select Supplier --</option>
+                </select>
+                <div style="display: flex; gap: 12px; margin-top: 8px;">
                     <button type="submit" class="btn btn-primary" style="flex: 1;">Save to Inventory</button>
-                    <button type="button" class="btn btn-outline" onclick="document.getElementById('addItemModal').classList.remove('active')">Cancel</button>
+                    <button type="button" class="btn btn-outline" onclick="document.getElementById('addItemModal').classList.remove('active');">Cancel</button>
                 </div>
             </form>
         </div>
