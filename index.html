@@ -6,8 +6,8 @@
   <title>Stock-Sphere | Dashboard</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <body>
   <div class="container">
     <aside class="sidebar">
@@ -19,7 +19,7 @@
         <ul>
           <li class="active"><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
           <li><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
-          <li><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
+          <li><a href="suppliers.html"><i class="fas fa-truck"></i> Suppliers</a></li>
           <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
           <hr style="opacity: 0.1; margin: 20px 0;">
           <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -48,13 +48,13 @@
             </div>
             <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
           </div>
-          
+
           <div class="stat-card danger">
             <div class="stat-info">
               <h3>Low Stock</h3>
               <p id="low-stock-count">--</p>
             </div>
-            <div class="stat-icon"><i class="fas fa-triangle-exclamation"></i></div>
+            <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
           </div>
 
           <div class="stat-card success">
@@ -62,7 +62,7 @@
               <h3>Inventory Value</h3>
               <p id="inventory-value">--</p>
             </div>
-            <div class="stat-icon"><i class="fas fa-indian-rupee-sign"></i></div>
+            <div class="stat-icon"><i class="fas fa-rupee-sign"></i></div>
           </div>
 
           <div class="stat-card warning">
@@ -70,11 +70,11 @@
               <h3>Active Suppliers</h3>
               <p id="total-suppliers">--</p>
             </div>
-            <div class="stat-icon"><i class="fas fa-truck-field"></i></div>
+            <div class="stat-icon"><i class="fas fa-truck"></i></div>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 30px;">
           <div class="section-card">
             <div class="section-header">
               <h2>Quick Actions</h2>
@@ -84,7 +84,7 @@
                 <i class="fas fa-warehouse"></i> Manage Inventory
               </a>
               <a href="suppliers.html" class="btn btn-outline" style="text-decoration: none; justify-content: center; width: 100%;">
-                <i class="fas fa-truck-field"></i> View Suppliers
+                <i class="fas fa-truck"></i> View Suppliers
               </a>
               <a href="reports.html" class="btn btn-outline" style="text-decoration: none; justify-content: center; width: 100%;">
                 <i class="fas fa-file-invoice"></i> Generate Reports
@@ -98,6 +98,17 @@
             </div>
             <div class="activity-list" id="recent-activities">
               <!-- Filled by app.js -->
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+          <div class="section-card">
+            <div class="section-header">
+              <h2><i class="fas fa-chart-pie" style="color: var(--primary);"></i> Stock Distribution</h2>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="dashboardChart"></canvas>
             </div>
           </div>
         </div>
