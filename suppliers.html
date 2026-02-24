@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"> 
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-    <body>
+<body>
     <div class="container">
         <aside class="sidebar">
             <div class="logo">
@@ -19,7 +18,7 @@
                 <ul>
                     <li><a href="index.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
                     <li><a href="inventory.html"><i class="fas fa-warehouse"></i> Inventory</a></li>
-                    <li class="active"><a href="suppliers.html"><i class="fas fa-truck-field"></i> Suppliers</a></li>
+                    <li class="active"><a href="suppliers.html"><i class="fas fa-truck"></i> Suppliers</a></li>
                     <li><a href="reports.html"><i class="fas fa-file-invoice"></i> Reports</a></li>
                     <hr style="opacity: 0.1; margin: 10px 0;">
                     <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -37,73 +36,61 @@
             </header>
 
             <div class="main-inner">
-                <div class="section-card">
+                <div class="table-container">
                     <div class="section-header">
                         <h2>Our Suppliers</h2>
-                        <button class="btn btn-primary" onclick="document.getElementById('addSupplierModal').classList.add('active')">
-                            <i class="fas fa-plus"></i> Add Supplier
-                        </button>
+                        <button class="btn btn-primary" onclick="document.getElementById('addSupplierModal').classList.add('active')"><i class="fas fa-plus"></i> Add Supplier</button>
                     </div>
-
-                    <div class="toolbar">
-                        <div class="search-box">
-                            <i class="fas fa-search"></i>
-                            <input type="text" placeholder="Search suppliers by name or email...">
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Contact Person</th>
-                                    <th>Email</th>
-                                    <th>Payment Terms</th>
-                                    <th>Performance</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="supplier-table-body">
-                                <!-- Data injected by app.js -->
-                            </tbody>
-                        </table>
-                    </div>
+                    <input type="text" id="supplier-search" class="form-control" placeholder="Search suppliers by name or email..." style="margin-bottom: 16px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Contact Person</th>
+                                <th>Email</th>
+                                <th>Payment Terms</th>
+                                <th>Performance</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supplier-table-body"></tbody>
+                    </table>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- Add Supplier Modal -->
-    <div id="addSupplierModal" class="modal">
-        <div class="modal-content">
-            <div class="section-header">
-                <h2>Add New Supplier</h2>
-                <button class="btn btn-outline" onclick="document.getElementById('addSupplierModal').classList.remove('active')">&times;</button>
-            </div>
+    <!-- Add/Edit Supplier Modal -->
+    <div class="modal-overlay" id="addSupplierModal">
+        <div class="modal-box">
+            <button class="modal-close" id="closeSupplierModal">&#x00D7;</button>
+            <h2 id="supplier-modal-title">Add New Supplier</h2>
             <form id="add-supplier-form">
-                <div class="form-group">
-                    <label>Supplier Name</label>
-                    <input type="text" class="form-control" required>
+                <input type="hidden" id="supplier-id">
+                <label for="supplier-name">Supplier Name</label>
+                <input type="text" class="form-control" id="supplier-name" required>
+                <label for="supplier-contact">Contact Person</label>
+                <input type="text" class="form-control" id="supplier-contact" required>
+                <label for="supplier-email">Email Address</label>
+                <input type="email" class="form-control" id="supplier-email" required>
+                <label for="supplier-terms">Payment Terms</label>
+                <select class="form-control" id="supplier-terms">
+                    <option>Net 15</option>
+                    <option>Net 30</option>
+                    <option>Net 60</option>
+                    <option>Due on Receipt</option>
+                </select>
+                <label for="supplier-performance">Performance</label>
+                <select class="form-control" id="supplier-performance">
+                    <option>Excellent</option>
+                    <option selected>Good</option>
+                    <option>Average</option>
+                    <option>Poor</option>
+                </select>
+                <div style="display: flex; gap: 12px; margin-top: 8px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 1;">Save Supplier</button>
+                    <button type="button" class="btn btn-outline" id="cancelSupplierBtn">Cancel</button>
                 </div>
-                <div class="form-group">
-                    <label>Contact Person</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Payment Terms</label>
-                    <select class="form-control">
-                        <option>Net 15</option>
-                        <option>Net 30</option>
-                        <option>Net 60</option>
-                        <option>Due on Receipt</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Save Supplier</button>
             </form>
         </div>
     </div>
