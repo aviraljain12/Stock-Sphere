@@ -67,3 +67,72 @@ label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.875re
 .activity-item { padding: 15px; border-radius: 14px; background: #f9f9ff; border-left: 4px solid var(--primary); margin-bottom: 12px; }
 .activity-item h4 { font-size: 1rem; margin-bottom: 5px; }
 .activity-item p { font-size: 0.85rem; color: var(--text-muted); }
+
+/* ===== Login Page Styles ===== */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg-main);
+}
+.login-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(109, 93, 252, 0.15);
+}
+.login-card .logo {
+  justify-content: center;
+  border: none;
+  padding: 0;
+  margin-bottom: 20px;
+  color: var(--primary);
+  font-size: 1.6rem;
+}
+.login-card h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--text-main);
+  margin-bottom: 28px;
+}
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+.btn-login:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(109, 93, 252, 0.3);
+}
+/* ===== Section Card (Dashboard) ===== */
+.section-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  border: 1px solid rgba(109, 93, 252, 0.05);
+}
+/* ===== Dashboard Chart Container ===== */
+.chart-wrapper {
+  max-width: 360px;
+  margin: 0 auto;
+  position: relative;
+}
+/* ===== Quick Actions Spacing ===== */
+.section-card .btn {
+  text-decoration: none;
+  justify-content: center;
+  width: 100%;
+}
