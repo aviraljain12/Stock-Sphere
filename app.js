@@ -135,6 +135,7 @@ function renderDashboardCharts(db) {
 function renderRecentTransactions(db) {
     const container = document.getElementById('recent-activities');
     if (!container) return;
+        if (!db.transactions) return;
 
     const recent = db.transactions.slice(-5).reverse();
     container.innerHTML = recent.map(t => {
