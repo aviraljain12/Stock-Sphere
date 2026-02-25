@@ -11,8 +11,10 @@
     <div class="container">
         <aside class="sidebar">
             <div class="logo">
-                <i class="fas fa-boxes-stacked"></i>
-                <span>Stock-Sphere</span>
+                <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;">
+                    <i class="fas fa-boxes-stacked"></i>
+                    <span>Stock-Sphere</span>
+                </a>
             </div>
             <nav>
                 <ul>
@@ -25,7 +27,6 @@
                 </ul>
             </nav>
         </aside>
-
         <main class="content">
             <header>
                 <h1>Supplier Management</h1>
@@ -34,7 +35,6 @@
                     <i class="fas fa-user-circle"></i>
                 </div>
             </header>
-
             <div class="main-inner">
                 <div class="table-container">
                     <div class="section-header">
@@ -59,11 +59,10 @@
             </div>
         </main>
     </div>
-
     <!-- Add/Edit Supplier Modal -->
     <div class="modal-overlay" id="addSupplierModal">
         <div class="modal-box">
-            <button class="modal-close" id="closeSupplierModal">&#x00D7;</button>
+            <button class="modal-close" onclick="document.getElementById('addSupplierModal').classList.remove('active'); document.getElementById('add-supplier-form').reset(); document.getElementById('supplier-id').value=''; document.getElementById('supplier-modal-title').textContent='Add New Supplier';">&#x00D7;</button>
             <h2 id="supplier-modal-title">Add New Supplier</h2>
             <form id="add-supplier-form">
                 <input type="hidden" id="supplier-id">
@@ -89,12 +88,11 @@
                 </select>
                 <div style="display: flex; gap: 12px; margin-top: 8px;">
                     <button type="submit" class="btn btn-primary" style="flex: 1;">Save Supplier</button>
-                    <button type="button" class="btn btn-outline" id="cancelSupplierBtn">Cancel</button>
+                    <button type="button" class="btn btn-outline" onclick="document.getElementById('addSupplierModal').classList.remove('active');">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>
