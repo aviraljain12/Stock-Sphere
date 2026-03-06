@@ -9,6 +9,8 @@
     <style>
         .actions-cell { display: flex; gap: 8px; }
     </style>
+        <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6d5dfc">
 </head>
 <body>
     <div class="container">
@@ -129,5 +131,19 @@
         </div>
     </div>
     <script src="app.js"></script>
+        <!-- New Gen-Z Feature Modules -->
+    <script src="toast.js"></script>
+    <script src="themes.js"></script>
+    <script src="gamification.js"></script>
+    <script src="ai-predictions.js"></script>
+    <script src="social.js"></script>
+    <script src="command-palette.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./sw.js').then(() => console.log('[SW] Registered'));
+        }
+    </script>
 </body>
 </html>
