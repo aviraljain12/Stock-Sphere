@@ -6,12 +6,11 @@
 
 const ThemeManager = (() => {
   const THEME_KEY = 'stock_sphere_theme';
-  const themes = ['light', 'dark', 'neumorphism'];
+  const themes = [ 'dark', 'neumorphism'];
   const themeIcons = { light: 'fa-sun', dark: 'fa-moon', neumorphism: 'fa-circle-half-stroke' };
-  const themeLabels = { light: 'Light', dark: 'Dark', neumorphism: 'Neo' };
-
+    const themeLabels = { dark: 'Dark', neumorphism: 'Neo' };
   function getCurrentTheme() {
-    return localStorage.getItem(THEME_KEY) || 'light';
+    return localStorage.getItem(THEME_KEY) || 'dark';
   }
 
   function setTheme(theme) {
