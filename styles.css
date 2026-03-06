@@ -135,4 +135,400 @@ label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.875re
   text-decoration: none;
   justify-content: center;
   width: 100%;
+
+/* ===== Gen-Z Features: XP Widget ===== */
+.xp-widget {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: rgba(109, 93, 252, 0.1);
+  border-radius: 20px;
+  margin-right: 12px;
+}
+
+.level-badge {
+  background: var(--primary);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.xp-bar-track {
+  width: 100px;
+  height: 8px;
+  background: rgba(109, 93, 252, 0.15);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width 0.5s ease;
+  border-radius: 10px;
+}
+
+.xp-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* ===== Gen-Z Features: Achievements ===== */
+.achievements-box {
+  max-width: 700px;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.achievement-card {
+  background: #f9f9ff;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.achievement-card.unlocked {
+  background: linear-gradient(135deg, rgba(109, 93, 252, 0.08), rgba(146, 136, 248, 0.08));
+  border-color: var(--primary);
+}
+
+.achievement-card.locked {
+  opacity: 0.5;
+  filter: grayscale(0.7);
+}
+
+.ach-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.achievement-card.locked .ach-icon {
+  background: #ccc;
+}
+
+.ach-info {
+  flex: 1;
+}
+
+.ach-info h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+.ach-info p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.ach-xp {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.ach-check {
+  font-size: 1.5rem;
+  color: var(--success);
+}
+
+.ach-lock {
+  font-size: 1.2rem;
+  color: #aaa;
+}
+
+/* ===== Gen-Z Features: Toast Notifications ===== */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.toast {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 300px;
+  animation: slideInRight 0.4s ease;
+  border-left: 4px solid var(--primary);
+}
+
+.toast.success {
+  border-left-color: var(--success);
+}
+
+.toast.error {
+  border-left-color: var(--danger);
+}
+
+.toast.achievement {
+  border-left-color: #ffb800;
+  background: linear-gradient(135deg, #fff9e6, #fff);
+}
+
+.toast-icon {
+  font-size: 1.4rem;
+}
+
+.toast.success .toast-icon { color: var(--success); }
+.toast.error .toast-icon { color: var(--danger); }
+.toast.achievement .toast-icon { color: #ffb800; }
+
+.toast-message {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0;
+  line-height: 1;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ===== Gen-Z Features: Command Palette ===== */
+#command-palette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10000;
+  display: none;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 15vh;
+}
+
+#command-palette.active {
+  display: flex;
+}
+
+.command-box {
+  background: #fff;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+#command-input {
+  width: 100%;
+  padding: 20px 24px;
+  border: none;
+  font-size: 1.1rem;
+  outline: none;
+  border-bottom: 2px solid #f0f0f5;
+}
+
+#command-results {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.command-item {
+  padding: 14px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 4px solid transparent;
+}
+
+.command-item:hover,
+.command-item.selected {
+  background: rgba(109, 93, 252, 0.08);
+  border-left-color: var(--primary);
+}
+
+.command-item i {
+  font-size: 1.1rem;
+  color: var(--primary);
+  width: 20px;
+}
+
+.command-label {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.command-shortcut {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+/* ===== Gen-Z Features: Theme Switcher ===== */
+.theme-switcher {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 500;
+}
+
+.theme-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(109, 93, 252, 0.4);
+  transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 8px 25px rgba(109, 93, 252, 0.5);
+}
+
+/* Dark Theme Variables */
+body.dark-theme {
+  --bg-main: #1a1a2e;
+  --sidebar-bg: #16213e;
+  --card-bg: #0f3460;
+  --text-main: #eaeaea;
+  --text-muted: #a8a8b8;
+}
+
+body.dark-theme .sidebar {
+  background: var(--sidebar-bg);
+}
+
+body.dark-theme .stat-card,
+body.dark-theme .table-container,
+body.dark-theme .modal-box,
+body.dark-theme header {
+  background: var(--card-bg);
+  color: var(--text-main);
+}
+
+body.dark-theme th,
+body.dark-theme td {
+  color: var(--text-main);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme .form-control {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+}
+
+body.dark-theme .activity-item {
+  background: rgba(109, 93, 252, 0.1);
+}
+
+/* ===== AI Prediction Widget ===== */
+.ai-widget {
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.1), rgba(181, 55, 255, 0.1));
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 24px;
+  border: 2px solid rgba(0, 245, 255, 0.2);
+}
+
+.ai-widget h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  color: var(--text-main);
+}
+
+.ai-widget h3 i {
+  color: #00f5ff;
+}
+
+.ai-predictions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ai-prediction-item {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+body.dark-theme .ai-prediction-item {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ===== Social Activity Feed ===== */
+.activity-feed {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.activity-item .activity-icon {
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+.activity-item .activity-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
 }
