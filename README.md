@@ -1,104 +1,130 @@
-<div align="center">
+# Stock-Sphere
 
-# 📦 Stock-Sphere
-
-**A real-time, centralized Inventory Management System for modern businesses.**
-
-![Made with](https://img.shields.io/badge/Made%20with-HTML%20%7C%20CSS%20%7C%20JavaScript-6d5dfc?style=for-the-badge)
-![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-00c897?style=for-the-badge)
-
-</div>
+> A browser-based Inventory Management System. No backend, no frameworks — just HTML, CSS, and vanilla JavaScript.
 
 ---
 
-## ⚠️ Copyright Notice
+## What It Solves
 
-> **© 2026 Aviral Jain (aviraljain12). All Rights Reserved.**
->
-> This project is publicly visible for **showcase and review purposes only.**
-> **No part of this codebase may be copied, cloned, modified, distributed, or used in any form without explicit written permission from the author.**
-> Unauthorized use is a violation of copyright law.
+Small businesses and workshops often manage stock with spreadsheets or even pen-and-paper. Transitions between inward and outward stock, supplier tracking, and reporting get messy fast. Stock-Sphere was built to give a lightweight, self-contained alternative that runs entirely in the browser — nothing to install, no server to configure.
+
+The core idea: give someone a laptop, open the app, and they have a working inventory system with dashboards, CRUD operations, and reports — all backed by localStorage.
 
 ---
 
-## 🚀 What is Stock-Sphere?
+## How It Works
 
-Stock-Sphere is a **browser-based Inventory Management System** built with pure HTML, CSS, and JavaScript. It uses `localStorage` as a real-time database — no backend required. Designed for small-to-medium businesses to manage their stock efficiently.
+The system is split across 5 HTML pages, each wired to a central application logic file (`app.js`) that handles all CRUD operations and authentication:
 
----
+| Page | Purpose |
+|------|---------|
+| `index.html` | Dashboard with stats, charts, and recent activity |
+| `inventory.html` | Add, edit, delete, and search inventory items |
+| `suppliers.html` | Manage supplier contacts and payment terms |
+| `reports.html` | Category-wise bar charts and low-stock tables |
+| `login.html` | Simple auth gate (credentials stored in localStorage) |
 
-## ✨ Features
+### Data Storage
 
-| Feature | Description |
-|---|---|
-| 📦 Inventory Management | Add, Edit, Delete items with SKU, Category, Quantity, Price tracking |
-| 🚚 Supplier Management | Add, Edit, Delete suppliers with contact & payment terms |
-| 📈 Live Dashboard | Real-time stats with doughnut chart for stock distribution |
-| 🔍 Smart Search | Filter inventory and suppliers instantly by name, SKU, email |
-| 🟡 Low Stock Alerts | Items with quantity < 20 auto-flagged as Low Stock |
-| 📉 Reports | Bar chart reports with low-stock summary & print option |
-| 🔐 Auth System | Login/Logout with admin credentials (admin / admin123) |
-| 🎨 Beautiful UI | Purple-themed dashboard inspired by modern SaaS designs |
+Everything persists in `localStorage` under a single key. The app ships with seed data (4 inventory items, 2 suppliers, 2 transactions) so it's usable immediately.
 
----
+### Auth
 
-## 🛠️ Tech Stack
-
-- **Frontend:** HTML5, CSS3, Vanilla JavaScript
-- **Charts:** Chart.js (via CDN)
-- **Icons:** Font Awesome 6
-- **Storage:** Browser `localStorage`
-- **Fonts:** Inter / Segoe UI
+Session is tracked via a `localStorage` flag. The hardcoded credentials (`admin` / `admin123`) are intentionally minimal — this is not production auth, just a guard to keep casual visitors out.
 
 ---
 
-## 📸 UI Highlights
+## Features
 
-- Sidebar navigation with active state highlighting
-- Stat cards with color-coded icons
-- Doughnut chart on Dashboard for category-wise stock view
-- Modal forms for Add/Edit with proper validation
-- Responsive table with Edit ✏️ and Delete 🔴 action buttons
-- Sticky header with user profile display
+- **CRUD Operations** — Create, read, update, delete inventory items and suppliers with form validation
+- **Dashboard** — Real-time stat cards (total products, low stock count, total suppliers, inventory value) + doughnut chart
+- **Search & Filter** — Filter inventory by name, SKU, category, or supplier; filter suppliers by name, email, or contact
+- **Low Stock Alerts** — Items with quantity below 20 are auto-flagged with a visual badge
+- **Reports** — Category-wise bar chart + low-stock summary table with print support
+- **Activity Feed** — Timeline of all user actions (add, edit, delete, login, report generation)
+- **Command Palette** — `Ctrl+K` to open a searchable command menu for quick navigation
+- **Gamification** — XP system with leveling, achievements, login streaks, and confetti on milestones
+- **PWA Support** — Installable as a progressive web app with offline capability via service worker
+- **Dark Theme** — Purple-toned UI with CSS custom properties for consistent theming
+
+## Additional Modules
+
+| File | Purpose |
+|------|---------|
+| `ai-predictions.js` | Fuzzy NLP search + stockout date prediction with confidence scoring |
+| `gamification.js` | XP/leveling engine, achievement tracking, confetti effects |
+| `command-palette.js` | Keyboard-driven command palette (`Ctrl+K`) |
+| `social.js` | Activity timeline with action tracking and filters |
+| `toast.js` | Toast notification manager |
+| `themes.js` | Theme toggler (dark mode) |
+| `sw.js` | Service worker for PWA offline caching |
 
 ---
 
-## 🔑 Login Credentials
+## Tech Stack
 
+| Layer | Technology |
+|-------|------------|
+| HTML | HTML5 (semantic markup) |
+| Styling | CSS3 with custom properties (CSS variables) |
+| Scripting | Vanilla JavaScript (ES6+) — no build step, no framework |
+| Charts | Chart.js (CDN) |
+| Icons | Font Awesome 6 (CDN) |
+| Storage | `localStorage` API |
+| PWA | Service Worker + manifest.json |
+| UI Components | Native modals + custom toast notifications |
+
+---
+
+## Running It
+
+No setup required. Clone the repo or grab the files, then open `login.html` in any modern browser.
+
+```bash
+# Clone
+git clone https://github.com/aviraljain12/Stock-Sphere.git
+
+# That’s it. Open login.html directly.
 ```
-Username: admin
-Password: admin123
-```
+
+Or use it live: [GitHub Pages](https://aviraljain12.github.io/Stock-Sphere/)
 
 ---
 
-## 📁 Project Structure
+## Limitations
 
-```
-Stock-Sphere/
-├── index.html       # Dashboard
-├── inventory.html   # Inventory Management
-├── suppliers.html   # Supplier Management
-├── reports.html     # Reports & Charts
-├── login.html       # Login Page
-├── styles.css       # Global Styles
-└── app.js           # Application Logic (CRUD + Auth)
-```
+I’m going to be upfront here — this is not production software. It was built to solve a specific problem (a working inventory demo without the overhead of setting up a backend) and it does that well. But there are real constraints:
 
----
+- **No multi-user support** — localStorage is browser-scoped and user-specific. Two people on the same machine would share data. No cloud sync.
+- **No server-side validation** — all validation happens client-side. A user with DevTools access can bypass anything.
+- **Hardcoded credentials** — the auth system is a UX gate, not a security boundary. Anyone with the credentials has full access.
+- **Data loss on cache clear** — clearing browser data or localStorage wipes everything. No export/import (yet).
+- **Single device only** — data doesn’t sync across devices. What you enter here stays here.
+- **No real-time collaboration** — the “real-time” label in the original description was aspirational. localStorage updates are instant within a session, but not across users.
 
-## 🚧 Usage Restrictions
-
-This repository is public for **portfolio and code review purposes only.**
-If you want to use this project or any part of it, please reach out:
-
-**📧 Contact:** [aviraljain12 on GitHub](https://github.com/aviraljain12)
+These aren’t bugs — they’re trade-offs. The goal was to ship something functional without a backend, and that means accepting these boundaries.
 
 ---
 
-<div align="center">
+## What I Learned
 
-Made with ❤️ by **Aviral Jain**
+Building this was a reset — going back to vanilla JavaScript after working with React and Node forced me to think about how things actually work under the hood. Specifically:
 
-</div>
+- **Event delegation** — instead of attaching listeners to every row, I learned to bind a single handler on the table and use `e.target` to figure out what was clicked. It’s cleaner and more performant.
+- **localStorage as a database** — sounds fun until you realize the 5MB limit and the lack of relational queries. I ended up doing all joins in JavaScript, which taught me the value of a real database.
+- **Modular IIFEs** — the `ai-predictions.js`, `gamification.js`, and `social.js` modules are all wrapped in IIFEs to avoid polluting the global scope. This is how “namespaces” worked before ES6 modules became standard.
+- **Service workers are unintuitive** — getting the PWA to cache assets correctly took several iterations. The caching strategy (cache-first for static assets, network-first for nothing since there’s no API) is simple but the lifecycle management is tricky.
+- **CSS variables over preprocessors** — no Sass needed. CSS custom properties handle theming and spacing consistently, and they’re native to the browser.
+
+---
+
+## Acknowledgments
+
+Thanks to [Aditya Srivastava](https://github.com/adityasrivastava1005) for contributing to this project.
+
+---
+
+## License
+
+This project is for educational and portfolio purposes only. All rights reserved — © 2026 Aviral Jain.
+|
